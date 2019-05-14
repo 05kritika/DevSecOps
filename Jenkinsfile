@@ -31,7 +31,7 @@ pipeline {
         stage ('DAST') {
           steps {
             
-               sh ' "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://ec2-3-90-50-121.compute-1.amazonaws.com:8080/webapp" || true'
+               sh ' "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://ec2-3-90-50-121.compute-1.amazonaws.com:8080/webapp/" || true'
         
       }
     }
