@@ -31,7 +31,7 @@ pipeline {
         stage ('DAST') {
           steps {
             sshagent(['zap']) {
-               sh ' "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://ec2-54-152-25-39.compute-1.amazonaws.com:8080/webapp/" '
+               sh ' "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://ec2-54-152-25-39.compute-1.amazonaws.com:8080/webapps/" '
         }
       }
     }
