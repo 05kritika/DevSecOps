@@ -12,25 +12,29 @@ pipeline {
                 ''' 
             }
         }
-        stage ('Check-Git-Secrets') {
-           steps {
-              sh 'rm trufflehog || true'
-              sh 'docker run gesellix/trufflehog --json https://github.com/cehkunal/webapp.git > trufflehog'
-              sh 'cat trufflehog'
-           }
-        }
+        
         
         stage ('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
-      stage ('Deploy-To-Tomcat') {
+        
+         stage ('Deploy-To-Tomcat') {
             steps {
                sshagent(['Tomcat']) {
-                  sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@ec2-54-167-238-109.compute-1.amazonaws.com:/home/ubuntu/prod/apache-tomcat-8.5.40/webapps/webapp.war'
+                  sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@ec2-54-152-25-39.compute-1.amazonaws.com:/home/ubuntu/prod/apache-tomcat-8.5.40/webapps/webapp.war'
                }      
            }       
        }
+        
+        stage ('DAST') {
+          steps {
+            sshagent(['zap']) {
+               sh ' docker run -t owasp/zap2docker-stable zap-baseline.py -t http://ec2-54-152-25-39.compute-1.amazonaws.com:8080/webapp/" || true'
+        }
+      }
     }
+    
+  }
 }
