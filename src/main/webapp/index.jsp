@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Devsecops Pipeline Demo</title>
+    <title>Devsecops ZAP-Pipeline Demo</title>
 
 
     <!-- Custom styles for this template -->
